@@ -1,0 +1,43 @@
+services:
+  back:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    entrypoint: "sh /justauth-backend/entrypoints/server.sh"
+    volumes:
+      - ./:/justauth-backend
+      - ./src/back_static:/justauth-backend/src/back_static
+      - ./src/back_media:/justauth-backend/src/back_media
+    networks:
+      - nginx-network
+
+#  web:
+#    build: ./frontend
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - ./frontend:/frontend
+  nginx:
+    image: nginx:1.13
+    container_name: justauth_nginx
+    restart: unless-stopped
+    ports:
+      - 1337:80
+      - 80:80
+      - 443:443
+    volumes:
+      - ./config/nginx/conf.d.local:/etc/nginx/conf.d
+      - ./src/back_static:/justauth-backend/src/back_static
+      - ./src/back_media:/justauth-backend/src/back_media
+#      - ./../umut-frontend/build:/opt/services/umut-frontend/build
+#      - /etc/letsencrypt:/etc/letsencrypt
+    networks:
+      - nginx-network
+
+
+networks:
+  nginx-network:
+    driver: bridge

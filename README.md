@@ -1,0 +1,1 @@
+# Auth_for_open_lesson

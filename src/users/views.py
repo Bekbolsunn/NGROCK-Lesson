@@ -32,5 +32,4 @@ def auth_view(request):
                             password=serializer.validated_data.get('password'))
         if not user:
             return Response("Authentications failed")
-        login(request, user)
-        return Response(data="Authentications proceed")
+        return Response(UserSerializer(user).data)

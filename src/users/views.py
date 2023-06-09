@@ -33,4 +33,4 @@ def auth_view(request):
         if not user:
             return Response("Authentications failed")
         login(request, user)
-        return Response(data=UserSerializer(user).data)
+        return Response(data="Authentications proceed")

@@ -9,7 +9,6 @@ from .serializers import RegisterSerializer, UserSerializer, LoginSerializer
 
 # Create your views here.
 
-@csrf_exempt
 @api_view(['POST'])
 def register_view(request):
     serializer = RegisterSerializer(data=request.data)
@@ -24,7 +23,6 @@ def register_view(request):
         return Response("Error! something went wrong")
 
 
-@csrf_exempt
 @api_view(['POST'])
 def auth_view(request):
     serializer = LoginSerializer(data=request.data)
